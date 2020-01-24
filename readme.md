@@ -1,7 +1,7 @@
 # Личный проект «Куплю. Продам» [![Build status][travis-image]][travis-url]
 
-* Студент: [Vitalii Iashchuk](https://up.htmlacademy.ru/nodejs/3/user/93555).
-* Наставник: `Неизвестно`.
+- Студент: [Vitalii Iashchuk](https://up.htmlacademy.ru/nodejs/3/user/93555).
+- Наставник: [Сергей Рожков](https://up.htmlacademy.ru/nodejs/3/user/1069033).
 
 ---
 
