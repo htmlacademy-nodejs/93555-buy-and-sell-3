@@ -5,4 +5,7 @@ env:
   es6: true
   node: true
 
-extends: 'htmlacademy/node'
+extends: "htmlacademy/node"
+
+rules:
+  object-curly-spacing: 0
