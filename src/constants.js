@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports.DEFAULT_COMMAND = `--help`;
 
@@ -6,7 +6,7 @@ module.exports.USER_ARGV_INDEX = 2;
 
 module.exports.ExitCode = {
   error: 1,
-  success: 0,
+  success: 0
 };
 
 module.exports.HttpCode = {
@@ -14,7 +14,5 @@ module.exports.HttpCode = {
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
   NOT_FOUND: 404,
-  INTERNAL_SERVER_ERROR: 500,
-
-
+  INTERNAL_SERVER_ERROR: 500
 };
