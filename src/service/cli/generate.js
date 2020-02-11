@@ -53,9 +53,6 @@ module.exports = {
   async run(args) {
     const [count] = args;
 
-    const res = await readContent(FILE_CATEGORIES_PATH);
-    console.log(res);
-
     const sentences = await readContent(FILE_SENTENCES_PATH);
     const titles = await readContent(FILE_TITLES_PATH);
     const categories = await readContent(FILE_CATEGORIES_PATH);
