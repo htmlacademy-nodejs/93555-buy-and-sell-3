@@ -28,15 +28,6 @@ const PictureRestrict = {
 
 const getPictureFileName = (number) => `item${String(number).padStart(2, `0`)}.jpg`;
 
-const generateOffers = (count, titles, categories, sentences) =>
-  Array(count) .fill({}) .map(() => ({
-    category: [categories[getRandomInt(0, categories.length - 1)]],
-    description: shuffle(sentences).slice(1, 5).join(` `),
-    picture: getPictureFileName(getRandomInt(PictureRestrict.min, PictureRestrict.max)),
-    title: titles[getRandomInt(0, titles.length - 1)],
-    type: Object.keys(OfferType)[Math.floor(Math.random() * Object.keys(OfferType).length)],
-    sum: getRandomInt(SumRestrict.min, SumRestrict.max)
-  }));
 
 const readContent = async (filePath) => {
   try {
@@ -47,30 +38,42 @@ const readContent = async (filePath) => {
     return [];
   }
 };
+const generateOffers = async (count) => {
+  const [sentences, titles, categories] = await Promise.all([
+    readContent(FILE_SENTENCES_PATH),
+    readContent(FILE_TITLES_PATH),
+    readContent(FILE_CATEGORIES_PATH)
+  ]);
+
+  return Array(count).fill({}).map(() => ({
+    category: [categories[getRandomInt(0, categories.length - 1)]],
+    description: shuffle(sentences).slice(1, 5).join(` `),
+    picture: getPictureFileName(getRandomInt(PictureRestrict.min, PictureRestrict.max)),
+    title: titles[getRandomInt(0, titles.length - 1)],
+    type: Object.keys(OfferType)[Math.floor(Math.random() * Object.keys(OfferType).length)],
+    sum: getRandomInt(SumRestrict.min, SumRestrict.max)
+  }));
+};
+
 
 module.exports = {
   name: `--generate`,
   async run(args) {
     const [count] = args;
 
-    const sentences = await readContent(FILE_SENTENCES_PATH);
-    const titles = await readContent(FILE_TITLES_PATH);
-    const categories = await readContent(FILE_CATEGORIES_PATH);
-
     if (count !== undefined && isNaN(count)) {
       console.log(chalk.red(`В качестве параметра необходимо ввести число.`));
       process.exit(ExitCode.error);
     }
 
-    const enteredCount = Number(count);
-    const countOffer = enteredCount || DEFAULT_COUNT;
+    const countOffer = Number(count) || DEFAULT_COUNT;
 
     if (countOffer > MAX_COUNT) {
       console.log(chalk.red(`Не больше 1000 публикаций.`));
       process.exit(ExitCode.error);
     }
 
-    const content = JSON.stringify(generateOffers(countOffer, titles, categories, sentences));
+    const content = JSON.stringify(await generateOffers(countOffer));
 
     try {
       await fs.writeFile(FILE_NAME, content);
