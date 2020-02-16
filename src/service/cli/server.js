@@ -39,7 +39,7 @@ const onClientConnect = async (req, res) => {
   switch (req.url) {
     case `/`:
       try {
-        const message = getMessage();
+        const message = await getMessage();
         sendResponse(res, HttpCode.OK, message);
       } catch (err) {
         sendResponse(res, HttpCode.NOT_FOUND, notFoundMessage);
