@@ -28,7 +28,6 @@ const PictureRestrict = {
 
 const getPictureFileName = (number) => `item${String(number).padStart(2, `0`)}.jpg`;
 
-
 const readContent = async (filePath) => {
   try {
     const content = await fs.readFile(filePath, `utf8`);
@@ -38,6 +37,7 @@ const readContent = async (filePath) => {
     return [];
   }
 };
+
 const generateOffers = async (count) => {
   const [sentences, titles, categories] = await Promise.all([
     readContent(FILE_SENTENCES_PATH),
